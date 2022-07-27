@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 
 import Filter from 'components/Filter/Filter';
 import ContactList from 'components/ContactList/ContactList';
@@ -36,7 +36,8 @@ export const App = () => {
 	const changeFilter = event => {
 		setFilter(event.currentTarget.value);
 	};
-	const visibleContacts = useMemo(() => {
+
+	const visibleContacts = () => {
 		const normalizeFilter = filter.toLowerCase();
 
 		if (contacts.length !== 0) {
@@ -45,7 +46,7 @@ export const App = () => {
 			);
 		}
 		return;
-	}, [filter]) // eslint-disable-line
+	}; 
 
 	useEffect(() => {
 		const contacts = window.localStorage.getItem('contacts');
@@ -69,7 +70,7 @@ export const App = () => {
 
         <Filter value={filter} onChange={changeFilter} />
         <ContactList
-          contacts={visibleContacts}
+          contacts={visibleContacts()}
           onDeleteContact={deleteContact}
         />
       </AppContainer>
